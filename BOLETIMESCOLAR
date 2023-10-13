@@ -1,0 +1,96 @@
+      ******************************************************************
+      * Author: ANDREI BATISTA
+      * Date: 11/10/2023
+      * Purpose: DESAFIO BOLETIM ESCOLAR DA CONCLUSÃO DO MODULO 2
+      * Tectonics: cobc
+      ******************************************************************
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. BOLETIMESCOLAR.
+       DATA DIVISION.
+       FILE SECTION.
+       WORKING-STORAGE SECTION.
+
+       01 WS-VARIAVEIS.
+          03 WS-NOME                  PIC X(30) VALUE SPACES.
+          03 WS-MATERIA               PIC X(15) VALUE SPACES.
+          03 WS-RESULTADO             PIC X(10) VALUE SPACES.
+          77 WS-DECISAO               PIC 9(2)V99 VALUE ZEROS.
+          77 WS-NOTA-1                PIC 9(2)V99 VALUE ZEROS.
+          77 WS-NOTA-2                PIC 9(2)V99 VALUE ZEROS.
+          77 WS-NOTA-3                PIC 9(2)V99 VALUE ZEROS.
+          77 WS-NOTA-4                PIC 9(2)V99 VALUE ZEROS.
+          77 WS-MEDIA                 PIC 9(2)V99 VALUE ZEROS.
+
+       PROCEDURE DIVISION.
+
+       P001-INICIO.
+           PERFORM P100-DADOS
+           PERFORM P200-CALC
+           PERFORM P300-DISPLAY
+           .
+       P100-DADOS.
+
+           INITIALISE WS-VARIAVEIS
+
+           DISPLAY 'DIGITE O NOME DO ALUNO: '
+           ACCEPT WS-NOME
+           DISPLAY 'DIGITE O NOME DA MATERIA: '
+           ACCEPT WS-MATERIA
+           DISPLAY 'DIGITE A PRIMEIRA NOTA: '
+           ACCEPT WS-NOTA-1
+           IF WS-NOTA-1 IS ALPHABETIC
+                   PERFORM P800-ERRO.
+           DISPLAY 'DIGITE A SEGUNDA NOTA: '
+           ACCEPT WS-NOTA-2
+           IF WS-NOTA-2 IS ALPHABETIC
+                   PERFORM P800-ERRO.
+           DISPLAY 'DIGITE A TERCEIRA NOTA: '
+           ACCEPT WS-NOTA-3
+           IF WS-NOTA-3 IS ALPHABETIC
+                   PERFORM P800-ERRO.
+           DISPLAY 'DIGITE A QUARTA NOTA: '
+           ACCEPT WS-NOTA-4
+           IF WS-NOTA-4 IS ALPHABETIC
+                   PERFORM P800-ERRO
+           .
+       P200-CALC.
+           COMPUTE WS-MEDIA = (WS-NOTA-1 + WS-NOTA-2 + WS-NOTA-3 +
+           WS-NOTA-4) / 4
+                       ON SIZE ERROR PERFORM P800-ERRO
+           END-COMPUTE
+           IF WS-MEDIA < 0
+               PERFORM P800-ERRO
+           ELSE
+               PERFORM P300-DISPLAY
+           END-IF
+           .
+       P300-DISPLAY.
+           IF WS-MEDIA >= 7
+               MOVE 'APROVADO' TO      WS-RESULTADO
+           ELSE
+               MOVE 'REPROVADO' TO     WS-RESULTADO
+           END-IF
+           DISPLAY 'RESULTADO DO PROCESSAMENTO'
+           DISPLAY 'NOME DO ALUNO: ' WS-NOME
+           DISPLAY 'MATERIA: '       WS-MATERIA
+           DISPLAY 'MEDIA: '         WS-MEDIA
+           DISPLAY 'STATUS: '        WS-RESULTADO
+           DISPLAY 'DESEJA CONTINUAR? DIGITE 1 PARA SIM E 2 PARA NAO'
+           ACCEPT WS-DECISAO
+
+           IF WS-DECISAO = 1
+               PERFORM P001-INICIO
+           ELSE
+               PERFORM P999-FIM
+           END-IF
+           .
+       P800-ERRO.
+           DISPLAY 'NOTAS INVALIDAS - TENTE NOVAMENTE'
+               PERFORM P001-INICIO
+           .
+       P800-FIM.
+
+       P999-FIM.
+
+           GOBACK.
+       END PROGRAM BOLETIMESCOLAR.
