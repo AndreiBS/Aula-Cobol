@@ -9,9 +9,9 @@
        FILE SECTION.
        WORKING-STORAGE SECTION.
        77 WS-MODO                  PIC 9    VALUE 0.
-       77 WS-NUM-1                 PIC 9(3) VALUE ZEROS.
-       77 WS-NUM-2                 PIC 9(3) VALUE ZEROS.
-       77 WS-RESULTADO             PIC 9(4) VALUE ZEROS.
+       77 WS-NUM-1                 PIC S9(3)V99.
+       77 WS-NUM-2                 PIC S9(3)V99.
+       77 WS-RESULTADO             PIC S9(4)V99.
        77 WS-DECISAO               PIC 9    VALUE 0.
 
        PROCEDURE DIVISION.
