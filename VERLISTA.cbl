@@ -2,6 +2,7 @@
       * Author: ANDREI BATISTA
       * Date: 16/10/2023
       * Purpose: VER CONTATOS INDEXED CRIADO PELO PROGRAMA SISCONTT
+      * Update: 17/10/2023 - TRANSFORMADO DE PROGRAMA PARA MODULO
       ******************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID. VERLISTA.
@@ -37,7 +38,11 @@
           88 EXIT-OK                       VALUE 'F' FALSE 'N'.
        77 WS-CONT                          PIC 9(003) VALUE ZEROS.
 
-       PROCEDURE DIVISION.
+       LINKAGE SECTION.
+       01 LK-COM-AREA.
+          03 LK-MENSAGEM                   PIC X(20).
+
+       PROCEDURE DIVISION USING LK-COM-AREA.
        MAIN-PROCEDURE.
             DISPLAY '*** LISTAGEM DE CONTATOS ***'
             SET EXIT-OK           TO FALSE

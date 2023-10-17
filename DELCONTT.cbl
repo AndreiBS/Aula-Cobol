@@ -2,6 +2,7 @@
       * Author: ANDREI BATISTA
       * Date: 16/10/2023
       * Purpose: EXCLUIR CONTATOS
+      * Update: 17/10/2023 - TRANSFORMADO DE PROGRAMA PARA MODULO
       ******************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID. DELCONTT.
@@ -36,7 +37,11 @@
        77 WS-EXIT                          PIC X.
           88 EXIT-OK                       VALUE 'F' FALSE 'N'.
        77 WS-CONFIRM                       PIC X VALUE SPACES.
-       PROCEDURE DIVISION.
+       LINKAGE SECTION.
+       01 LK-COM-AREA.
+          03 LK-MENSAGEM                   PIC X(20).
+
+       PROCEDURE DIVISION USING LK-COM-AREA.
        MAIN-PROCEDURE.
             DISPLAY '*** EXCLUI CONTATOS ***'
             SET EXIT-OK           TO FALSE

@@ -2,6 +2,7 @@
       * Author: ANDREI BATISTA
       * Date: 16/10/2023
       * Purpose: CADASTRAR CONTATOS INDEXED
+      * Update: 17/10/2023 - TRANSFORMADO DE PROGRAMA PARA MODULO
       ******************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID. SISCONTT.
@@ -35,7 +36,12 @@
           88 EOF-OK                        VALUE 'S' FALSE 'N'.
        77 WS-EXIT                          PIC X.
           88 EXIT-OK                       VALUE 'F' FALSE 'N'.
-       PROCEDURE DIVISION.
+
+       LINKAGE SECTION.
+       01 LK-COM-AREA.
+          03 LK-MENSAGEM                   PIC X(20).
+
+       PROCEDURE DIVISION USING LK-COM-AREA.
        MAIN-PROCEDURE.
             DISPLAY '*** CADASTRO DE CONTATOS ***'
             SET EXIT-OK           TO FALSE

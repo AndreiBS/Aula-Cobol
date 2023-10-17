@@ -2,6 +2,7 @@
       * Author: ANDREI BATISTA
       * Date: 16/10/2023
       * Purpose: CONSULTAR CONTATOS
+      * Update: 17/10/2023 - TRANSFORMADO DE PROGRAMA PARA MODULO
       ******************************************************************
        IDENTIFICATION DIVISION.
        PROGRAM-ID. CONSCTT.
