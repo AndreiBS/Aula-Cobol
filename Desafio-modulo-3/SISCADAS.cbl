@@ -1,11 +1,10 @@
       ******************************************************************
       * Author: ANDREI BATISTA
-      * Date: 16/10/2023
-      * Purpose: CADASTRAR CONTATOS INDEXED
-      * Update: 17/10/2023 - TRANSFORMADO DE PROGRAMA PARA MODULO
+      * Date: 17/10/2023
+      * Purpose: CADASTRAR ALUNO
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. SISCONTT.
+       PROGRAM-ID. SISCADAS.
 
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
@@ -13,37 +12,37 @@
             DECIMAL-POINT IS COMMA.
             INPUT-OUTPUT SECTION.
             FILE-CONTROL.
-               SELECT CONTATOS ASSIGN TO
-                'C:\COBOL\CONTATOS.DAT'
+               SELECT ALUNOS ASSIGN TO
+                'C:\COBOL\Desafio-modulo-3\REGISTRO.DAT'
                ORGANISATION IS INDEXED
                ACCESS  MODE IS RANDOM
-               RECORD  KEY  IS ID-CONTATO
+               RECORD  KEY  IS ID-ALUNO
                FILE STATUS IS WS-FS.
 
        DATA DIVISION.
        FILE SECTION.
-       FD CONTATOS.
-          COPY FD_CONTT.
-
+       FD ALUNOS.
+          COPY FD_REGIS.
        WORKING-STORAGE SECTION.
-       01 WS-REGISTRO                      PIC X(22) VALUE SPACES.
+       01 WS-REGISTRO                      PIC X(50) VALUE SPACES.
        01 FILLER REDEFINES WS-REGISTRO.
-          03 WS-ID-CONTATO                 PIC 9(02).
-          03 WS-NM-CONTATO                 PIC X(20).
+          03 WS-ID-ALUNO                   PIC 9(03).
+          03 WS-NM-ALUNO                   PIC X(20).
+          03 WS-TL-ALUNO                   PIC X(15).
        77 WS-FS                            PIC 99.
           88 FS-OK                         VALUE 0.
        77 WS-EOF                           PIC X.
           88 EOF-OK                        VALUE 'S' FALSE 'N'.
        77 WS-EXIT                          PIC X.
-          88 EXIT-OK                       VALUE 'F' FALSE 'N'.
+          88 EXIT-OK                       VALUE 'F' 'f' FALSE 'N'.
 
        LINKAGE SECTION.
        01 LK-COM-AREA.
-          03 LK-MENSAGEM                   PIC X(20).
+          03 LK-MENSAGEM                   PIC X(50).
 
        PROCEDURE DIVISION USING LK-COM-AREA.
        MAIN-PROCEDURE.
-            DISPLAY '*** CADASTRO DE CONTATOS ***'
+            DISPLAY '*** CADASTRO DE ALUNOS ***'
             SET EXIT-OK           TO FALSE
             PERFORM P300-CADASTRA THRU P300-FIM UNTIL EXIT-OK
             PERFORM P900-FIM
@@ -51,32 +50,34 @@
        P300-CADASTRA.
             SET EOF-OK            TO FALSE
             SET FS-OK             TO TRUE
-
-            DISPLAY 'PARA REGISTRAR UM CONTATO, INFORME: '
+            DISPLAY 'PARA REGISTRAR UM ALUNO, INFORME: '
             DISPLAY 'Um numero para Identificacao e tecle <ENTER>: '
-            ACCEPT WS-ID-CONTATO
+            ACCEPT WS-ID-ALUNO
             DISPLAY 'Um nome para o Contato e tecle <ENTER>: '
-            ACCEPT WS-NM-CONTATO
+            ACCEPT WS-NM-ALUNO
+            DISPLAY 'Um numero de Telefone e tecle <ENTER>: '
+            ACCEPT WS-TL-ALUNO
 
-            OPEN I-O CONTATOS
+            OPEN I-O ALUNOS
             IF WS-FS EQUAL 35 THEN
-                OPEN OUTPUT CONTATOS
+                OPEN OUTPUT ALUNOS
             END-IF
             IF FS-OK THEN
-                MOVE WS-ID-CONTATO         TO ID-CONTATO
-                MOVE WS-NM-CONTATO         TO NM-CONTATO
+                MOVE WS-ID-ALUNO         TO ID-ALUNO
+                MOVE WS-NM-ALUNO         TO NM-ALUNO
+                MOVE WS-TL-ALUNO         TO TL-ALUNO
 
-                WRITE REG-CONTATOS
+                WRITE REG-ALUNO
                        INVALID KEY
-                           DISPLAY 'CONTATO JA CADASTRADO! '
+                           DISPLAY 'ALUNO JA CADASTRADO! '
                        NOT INVALID KEY
-                           DISPLAY 'Contato gravado com Sucesso! '
+                           DISPLAY 'Aluno gravado com Sucesso! '
                 END-WRITE
             ELSE
-                DISPLAY 'ERRO AO ABRIR O ARQUIVO DE CONTATOS. '
+                DISPLAY 'ERRO AO ABRIR O ARQUIVO DE ALUNOS. '
                 DISPLAY 'FILE STATUS: ' WS-FS
             END-IF
-            CLOSE CONTATOS
+            CLOSE ALUNOS
 
             DISPLAY
                'TECLE: '
@@ -85,6 +86,5 @@
             .
        P300-FIM.
        P900-FIM.
-            DISPLAY 'PROGRAMA FINALIZADO!'
             GOBACK.
-       END PROGRAM SISCONTT.
+       END PROGRAM SISCADAS.
